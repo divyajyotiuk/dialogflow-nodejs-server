@@ -1,3 +1,48 @@
+# dialogflow-nodejs-server
+
+This project aims to create a Custom Voice Assistant for Enterprise Usage. Your own Voice User Interface (VUI), enabling voice commands to make user experience richer in websites.
+
+1. For capturing voice on browser - used [RecordRTC](https://www.npmjs.com/package/recordrtc), a WebRTC Javascript library for audio/video/screen activity recording.
+2. Using DialogFlow’s client library (available within npm) to make the bot that will enable VUI.
+
+
+- Integrating website with Dialogflow agent.
+- Google's Dialogflow is well known for natural language understanding platform. 
+- It is recommended that you understand how Dialogflow Agent works before you use this project. Here is the [documentation](https://cloud.google.com/dialogflow/docs) and try training the agent on [console](https://dialogflow.cloud.google.com/) before you begin. 
+  - Start by creating an Agent and understanding how Intents work. 
+
+## Dailogflow Project Setup
+
+- Create an agent on Dialogflow console. (https://dialogflow.cloud.google.com/)
+- Enable Beta features in the settings. 
+- In this project, [Node.js Client Library](https://cloud.google.com/dialogflow/docs/reference/libraries/nodejs) has been used to integrate the Dialogflow agent with the website. 
+- You can find the github repo for [Dialogflow API: Node.js](https://github.com/googleapis/nodejs-dialogflow) Client here.
+- Quick start
+  - [Select or create a Google Cloud Platform project](https://console.cloud.google.com/project). (If you've already created on Dialogflow, you'll find it with the same login on GCP)
+  - [Enable the Dialogflow API.](https://console.cloud.google.com/flows/enableapi?apiid=dialogflow.googleapis.com). After API is enabled, you'll need the credentials to use the API. 
+  - Set up authentication with a service account so you can access the API from your local workstation. Follow the steps given [here](https://cloud.google.com/docs/authentication/getting-started)
+  - Set the environment variable before running your client-server instances.
+  - `source env_vars.sh` where env_vars.sh has this content `export GOOGLE_APPLICATION_CREDENTIALS="[COMPLETE-PATH-TO-JSON-FILE]"`
+
+### Settings
+
+You can create a .env file for your environment constants. I have put the settings likewise. 
+[dotenv](https://www.npmjs.com/package/dotenv) has been used to load these environment constants. 
+```
+const env = require('dotenv').config({ path: '.env' });
+```
+
+```
+PROJECT_ID=your-project-id
+LANGUAGE_CODE=en-US
+ENCODING=AUDIO_ENCODING_LINEAR_16
+SAMPLE_RATE_HERTZ=16000
+SINGLE_UTTERANCE=false
+SPEECH_ENCODING=LINEAR16
+PORT=8000
+```
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,4 +111,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# dialogflow-nodejs-server

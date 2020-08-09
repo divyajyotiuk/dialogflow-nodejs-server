@@ -1,3 +1,8 @@
+/**
+ * Refered the below article
+ * https://medium.com/google-cloud/building-your-own-conversational-voice-ai-with-dialogflow-speech-to-text-in-web-apps-part-i-b92770bd8b47
+ */
+
 import React from 'react';
 import Record from './services/record';
 import './App.css';
@@ -32,6 +37,7 @@ const List = () => {
 }
 
 export default App;
+
 
 
 //./google-cloud-sdk/bin/gcloud init    for instantiating gcloud

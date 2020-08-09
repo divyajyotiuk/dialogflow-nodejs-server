@@ -1,13 +1,18 @@
 import deepGet from 'lodash/get';
 
-const LOG_TAG = "responseHandler :: ";
+const LOG_TAG = "client :: responseHandler :: ";
 class ResponseHandler {
 
-    getResponse = (res, callback) => {
+    /**
+     * @name getResponse takes response object and function name as string to get results
+     * @param {object} res 
+     * @param {string} fnCall 
+     */
+    getResponse = (res, fnCall) => {
         this.response = res;
         
-        this[callback].apply(this);     //context[fnName].apply(context)
-        return this[callback]();
+        this[fnCall].apply(this);     //context[fnName].apply(context)
+        return this[fnCall]();
     }
 
     getQueryText = () => {

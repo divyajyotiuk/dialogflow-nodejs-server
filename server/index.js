@@ -17,6 +17,8 @@ const path = require('path');
 const fs = require('fs');
 const df = require('./service/dialogflowService');
 //const df = require('./service/dialogFlowText');          uncomment for dialogFlow text test with response
+
+
 const LOG_TAG = "Server :: index.js :: "; 
 
 io.on('connection', (client) => {
@@ -32,8 +34,10 @@ io.on('connection', (client) => {
 
     ss(client).on('stream', function(stream, data) {
         const filename = path.basename(data.name);
+
+        //pipes the data received
         stream.on('data', (results) => {
-            console.log(LOG_TAG, results);
+            //results -> byte array
             stream.pipe(fs.createWriteStream(filename));
         });
 
@@ -43,7 +47,7 @@ io.on('connection', (client) => {
       
         df.detectIntentStreamDialogFlow(stream, function(results){
             console.log("results ==========> ", results);
-            client.emit('results', results);
+            client.emit('results', results);            //emits the api response to client from DialogflowService
         });
         // detectIntentStream(stream, function(results){
         //     client.emit('results', results);
@@ -51,7 +55,6 @@ io.on('connection', (client) => {
     });
 });
 
-console.log(env);
 console.log("Server ::");
 
 server.listen(PORT);

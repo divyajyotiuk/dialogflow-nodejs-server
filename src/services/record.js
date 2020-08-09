@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import ss from 'socket.io-stream';
 import responseHandler from './ResponseHandler';
 
-const LOG_TAG = 'recordRTC :: ';
+const LOG_TAG = 'client :: recordRTC :: ';
 const socket = io('http://localhost:8000');
 
 socket.on('connect', () => {
@@ -136,8 +136,12 @@ const getResults = () => {
 
 		let queryText = responseHandler.getResponse(data, 'getQueryText');
 		let payload = responseHandler.getResponse(data, 'getCustomPayload');
-		// console.log(LOG_TAG, payload);
-		// console.log(LOG_TAG, queryText);
+		let intent = responseHandler.getResponse(data, 'getIntentName');
+		console.log(LOG_TAG, payload);
+		console.log(LOG_TAG, queryText);
+		if(intent){
+			console.log(LOG_TAG, intent);
+		}
 	});
 	return results;
 }

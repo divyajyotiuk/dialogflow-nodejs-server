@@ -1,3 +1,16 @@
+/**
+ * Tested Streaming detect intent
+ * Please refer 
+ * https://cloud.google.com/dialogflow/docs/how/detect-intent-stream
+ * https://github.com/googleapis/nodejs-dialogflow/tree/master/samples#detect-intent-streaming
+ * https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/detect.js
+ * 
+ * For request fields - StreamingDetectIntentRequest
+ * https://cloud.google.com/dialogflow/docs/reference/rpc/google.cloud.dialogflow.v2#google.cloud.dialogflow.v2.StreamingDetectIntentRequest
+ * For response fields - StreamingDetectIntentResponse
+ * https://cloud.google.com/dialogflow/docs/reference/rpc/google.cloud.dialogflow.v2#google.cloud.dialogflow.v2.StreamingDetectIntentResponse
+ */
+
 const dialogflow = require('dialogflow').v2beta1;
 const uuid = require('uuid');
 const pump = require('pump');
