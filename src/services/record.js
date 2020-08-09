@@ -2,7 +2,9 @@
 import RecordRTC from 'recordrtc';
 import io from 'socket.io-client';
 import ss from 'socket.io-stream';
+import responseHandler from './ResponseHandler';
 
+const LOG_TAG = 'recordRTC :: ';
 const socket = io('http://localhost:8000');
 
 socket.on('connect', () => {
@@ -125,11 +127,17 @@ const callBackFunction = (stream) => {
 }
 
 const getResults = () => {
-	let results;
+	let results = '';
 	//put this in a function and call in App.js
 	socket.on('results', (data) => {
 		results = data;
-		console.log(data);
+
+		console.log(LOG_TAG, data);
+
+		let queryText = responseHandler.getResponse(data, 'getQueryText');
+		let payload = responseHandler.getResponse(data, 'getCustomPayload');
+		// console.log(LOG_TAG, payload);
+		// console.log(LOG_TAG, queryText);
 	});
 	return results;
 }
