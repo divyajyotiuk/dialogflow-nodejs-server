@@ -1,5 +1,7 @@
 const dialogflow = require('dialogflow').v2beta1;
 const uuid = require('uuid');
+const pump = require('pump');
+const { Transform } = require('stream');
 
 class DialogFlowService {
     constructor(){
@@ -27,6 +29,8 @@ class DialogFlowService {
                     sampleRateHertz: process.env.SAMPLE_RATE_HERTZ,
                     encoding: process.env.ENCODING,
                     languageCode: process.env.LANGUAGE_CODE
+                    // audioChannelCount: 2,
+                    // enableSeparateRecognitionPerChannel: true
                 },
                 singleUtterance: process.env.SINGLE_UTTERANCE
             }
@@ -56,7 +60,38 @@ class DialogFlowService {
      * @param {function} callback 
      */
     detectIntentStreamDialogFlow = async (audio, callback) => {
-        
+        const oThis = this;
+        oThis.setRequest();
+        const detectStream = oThis.sessionClient.streamingDetectIntent()
+                        .on('data', (data) => {
+                            if (data.recognitionResult) {
+                                console.log(
+                                  `Intermediate transcript:
+                                  ${data.recognitionResult.transcript}`
+                                );
+                              } else {
+                                  console.log(`Detected intent:`);
+                                  callback(data);
+                              }
+                        })
+                        .on('error', (err) => {
+                            console.log(err);
+                        })
+                        .on('end', () => {
+                            console.log('on end...');
+                        });
+                        
+        detectStream.write(oThis.request);
+
+        await pump(audio, 
+            new Transform({
+                objectMode: true,
+                transform: (obj, _, next) => {
+                    next(null, { inputAudio: obj });
+                }
+            }),
+            detectStream
+        );
     }
 
     /**

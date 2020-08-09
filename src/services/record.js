@@ -45,6 +45,7 @@ const automaticRecord = () => {
 	if(!microphone){
 		captureStream( callBackFunction );
 	}
+	return getResults();
 }
 
 const callBackFunction = (stream) => {
@@ -52,10 +53,11 @@ const callBackFunction = (stream) => {
 
 	if(microphone){
 
+		//wav header
 		let options = {
 			type: 'audio',
 			mimeType: 'audio/webm',
-			numberOfAudioChannels: isEdge ? 1 : 2,
+			numberOfAudioChannels: 1,
 			checkForInactiveTracks: true,
 			bufferSize: 16384,
 			sampleRate: 44100,
@@ -122,9 +124,14 @@ const callBackFunction = (stream) => {
 	}
 }
 
-//put this in a function and call in App.js
-socket.on('results', (data) => {
-	console.log(data);
-});
+const getResults = () => {
+	let results;
+	//put this in a function and call in App.js
+	socket.on('results', (data) => {
+		results = data;
+		console.log(data);
+	});
+	return results;
+}
 
 export default automaticRecord;

@@ -14,8 +14,10 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const ss = require('socket.io-stream');
 const path = require('path');
+const fs = require('fs');
 const df = require('./service/dialogflowService');
 //const df = require('./service/dialogFlowText');          uncomment for dialogFlow text test with response
+const LOG_TAG = "Server :: index.js :: "; 
 
 io.on('connection', (client) => {
     console.log("client connected");
@@ -30,8 +32,19 @@ io.on('connection', (client) => {
 
     ss(client).on('stream', function(stream, data) {
         const filename = path.basename(data.name);
-        stream.pipe(fs.createWriteStream(filename));
+        stream.on('data', (results) => {
+            console.log(LOG_TAG, results);
+            stream.pipe(fs.createWriteStream(filename));
+        });
+
+        stream.on('error', (err) => {
+            console.log(LOG_TAG + 'error --------------->', err);
+        });
       
+        df.detectIntentStreamDialogFlow(stream, function(results){
+            console.log("results ==========> ", results);
+            client.emit('results', results);
+        });
         // detectIntentStream(stream, function(results){
         //     client.emit('results', results);
         // });
