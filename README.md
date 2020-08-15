@@ -1,5 +1,7 @@
 # dialogflow-nodejs-server
 
+https://divyajyotiuk.github.io/dialogflow-nodejs-server/
+
 This project aims to create a Custom Voice Assistant for Enterprise Usage. Your own Voice User Interface (VUI), enabling voice commands to make user experience richer in websites.
 
 1. For capturing voice on browser - uses [RecordRTC](https://www.npmjs.com/package/recordrtc), a WebRTC Javascript library for audio/video/screen activity recording.
@@ -46,56 +48,56 @@ PORT=8000
 ### RecordRTC audio config
 
 ```js
-		//wav header
-		let options = {
-			type: 'audio',
-			mimeType: 'audio/webm',
-			numberOfAudioChannels: 1,
-			checkForInactiveTracks: true,
-			bufferSize: 16384,
-			sampleRate: 44100,
-			desiredSampRate: 16000,
-			recorderType: RecordRTC.StereoAudioRecorder,
+//wav header
+let options = {
+	type: 'audio',
+	mimeType: 'audio/webm',
+	numberOfAudioChannels: 1,
+	checkForInactiveTracks: true,
+	bufferSize: 16384,
+	sampleRate: 44100,
+	desiredSampRate: 16000,
+	recorderType: RecordRTC.StereoAudioRecorder,
 
-			// get intervals based blobs
-			// value in milliseconds
-			// as you might not want to make detect calls every 5 seconds
-			timeSlice: 5000,
+	// get intervals based blobs
+	// value in milliseconds
+	// as you might not want to make detect calls every 5 seconds
+	timeSlice: 5000,
 
-			ondataavailable: (blob) => {
-				// 3
-				// making use of socket.io-stream for bi-directional
-				// streaming, create a stream
-				var ioStream = ss.createStream();
-				console.log("streaming to server .....");
-				// stream directly to server
-				// it will be temp. stored locally
-				ss(socket).emit('stream', ioStream, {
-					name: 'stream.wav', 
-					size: blob.size
-				});
-				// pipe the audio blob to the read stream to not overwhelm source and destination of different speeds
-				ss.createBlobReadStream(blob).pipe(ioStream);
-			}
-		};
+	ondataavailable: (blob) => {
+		// 3
+		// making use of socket.io-stream for bi-directional
+		// streaming, create a stream
+		var ioStream = ss.createStream();
+		console.log("streaming to server .....");
+		// stream directly to server
+		// it will be temp. stored locally
+		ss(socket).emit('stream', ioStream, {
+			name: 'stream.wav', 
+			size: blob.size
+		});
+		// pipe the audio blob to the read stream to not overwhelm source and destination of different speeds
+		ss.createBlobReadStream(blob).pipe(ioStream);
+	}
+};
 ```
 
 ### Dialogflow audio config
 
 ```js
-        oThis.request = {
-            session: oThis.sessionPath,
-            queryInput: {
-                audioConfig: {
-                    sampleRateHertz: process.env.SAMPLE_RATE_HERTZ,
-                    encoding: process.env.ENCODING,
-                    languageCode: process.env.LANGUAGE_CODE
-                    // audioChannelCount: 2,                //for multi-channels
-                    // enableSeparateRecognitionPerChannel: true
-                },
-                singleUtterance: process.env.SINGLE_UTTERANCE
-            }
-        };
+oThis.request = {
+    session: oThis.sessionPath,
+    queryInput: {
+	audioConfig: {
+	    sampleRateHertz: process.env.SAMPLE_RATE_HERTZ,
+	    encoding: process.env.ENCODING,
+	    languageCode: process.env.LANGUAGE_CODE
+	    // audioChannelCount: 2,                //for multi-channels
+	    // enableSeparateRecognitionPerChannel: true
+	},
+	singleUtterance: process.env.SINGLE_UTTERANCE
+    }
+};
 ```
 
 Dialogflow config and RecordRTC wav config should be in sync.
