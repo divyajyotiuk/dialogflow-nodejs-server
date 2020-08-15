@@ -24,6 +24,10 @@
   color: white;
 }
 
+.waveform {
+  display: block;
+}
+
 .text {
   text-align: left;
 }

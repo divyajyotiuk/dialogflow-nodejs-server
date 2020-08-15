@@ -25,3 +25,4 @@ yarn-error.log*
 Lucy-9645cc78036d.json
 env_vars.sh
 /server/.env
+/server/stream.wav
