@@ -3,24 +3,34 @@
  * https://medium.com/google-cloud/building-your-own-conversational-voice-ai-with-dialogflow-speech-to-text-in-web-apps-part-i-b92770bd8b47
  */
 
-import React from 'react';
-import Record from './services/record';
+import React, {useEffect, useState} from 'react';
+import {automaticRecord, clientData} from './services/record';
 import './App.css';
 import Waveform from './components/Waveform';
 
 function App() {
-  Record();
+  const [temp, updateText] = useState({});
+  automaticRecord();
+  
+  useEffect(() => {
+    setInterval(()=>{
+      updateText(clientData);
+      console.log("LOG App :: ", clientData);
+    }, 4000);  
+  }, []);
+ 
   return (
     <div className="App">
       <header className="App-header">
         <h3> Say out the below commands out loud </h3>
-        <List />
+        <List data = {temp} />
       </header>
     </div>
   );
 }
 
-const List = () => {
+const List = (props) => {
+  const { data } = props;
   return(
     <div>
       <div>
@@ -34,6 +44,12 @@ const List = () => {
           <li>Hey Lucy, start class</li>
           <li>Hey Lucy, exit class</li>
         </ul>
+    </div>
+    <div className="response-text">
+      <ol>
+        <li>Query: {data.queryText}</li>
+        <li>Intent: {data.intent}</li>
+      </ol>
     </div>
     <div className="waveform">
       <Waveform />

@@ -17,6 +17,8 @@ var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 var recorder; // globally accessible
 var microphone;
 
+export var clientData = {};
+
 const captureStream = (callback) => {
 	if(microphone){
 		callback(microphone);
@@ -43,11 +45,11 @@ const captureStream = (callback) => {
 	});
 }
 
-const automaticRecord = () => {
+export const automaticRecord = () => {
 	if(!microphone){
 		captureStream( callBackFunction );
 	}
-	return getResults();
+	getResults();
 }
 
 const callBackFunction = (stream) => {
@@ -69,7 +71,7 @@ const callBackFunction = (stream) => {
 			// get intervals based blobs
 			// value in milliseconds
 			// as you might not want to make detect calls every 5 seconds
-			timeSlice: 5000,
+			timeSlice: 4000,
 
 			ondataavailable: (blob) => {
 				// 3
@@ -128,6 +130,7 @@ const callBackFunction = (stream) => {
 
 const getResults = () => {
 	let results = '';
+	let temp = {};
 	//put this in a function and call in App.js
 	socket.on('results', (data) => {
 		results = data;
@@ -137,13 +140,17 @@ const getResults = () => {
 		let queryText = responseHandler.getResponse(data, 'getQueryText');
 		let payload = responseHandler.getResponse(data, 'getCustomPayload');
 		let intent = responseHandler.getResponse(data, 'getIntentName');
-		console.log(LOG_TAG, payload);
-		console.log(LOG_TAG, queryText);
+		console.log("payload ===> ", payload);
+		console.log("query text ====>", queryText);
+		temp['queryText'] = queryText;
+		temp['intent'] = intent;
+		setTempData(temp);
 		if(intent){
 			console.log(LOG_TAG, intent);
 		}
 	});
-	return results;
 }
 
-export default automaticRecord;
+const setTempData = (temp) => {
+	clientData = temp;
+}

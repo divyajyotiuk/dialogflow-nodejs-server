@@ -30,6 +30,7 @@ class WaveformGenerator {
     }
 
     createAnalyser = () => {
+        if(!this.audioCtx) return "audio context not found";
         this.analyser = this.audioCtx.createAnalyser();
         this.analyser.minDecibels = -90;
         this.analyser.maxDecibels = -10;
@@ -37,6 +38,7 @@ class WaveformGenerator {
     }
 
     initVoiceSetting = () => {
+        if(!this.audioCtx) return "audio context not found";
         this.distortion = this.audioCtx.createWaveShaper();
         this.gainNode = this.audioCtx.createGain();
         this.biquadFilter = this.audioCtx.createBiquadFilter();
