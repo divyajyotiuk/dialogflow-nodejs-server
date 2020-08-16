@@ -2,3 +2,17 @@
     max-width: 800px;
     margin: 10px auto 0 auto;
 }
+
+.select-style {
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+
+.select-style select {
+    font-size: inherit;
+    letter-spacing: inherit;
+}
+
+label {
+    margin-right: 10px;
+}
