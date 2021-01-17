@@ -32,6 +32,56 @@
   text-align: left;
 }
 
+.button-div{
+  display: flex;
+  justify-content: center;
+}
+
+.red-button{
+  padding: 10px 20px 10px 20px;
+  background-color: #df5774;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: large;
+  border-radius: 3px;
+  border: 1px solid  #df5774;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.red-button:hover{
+  background-color: #e0274f;
+  border: 1px solid  #e0274f;
+}
+
+.red-button:focus{
+  outline: none;
+}
+
+.green-button{
+  padding: 10px 20px 10px 20px;
+  background-color: #57df80;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: large;
+  border-radius: 3px;
+  margin-left: 20px;
+  border: 1px solid  #57df80;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.green-button:hover{
+  background-color: #1eaa48;
+  border: 1px solid  #1eaa48;
+}
+
+.green-button:focus{
+  outline: none;
+}
+
 .App-link {
   color: #61dafb;
 }

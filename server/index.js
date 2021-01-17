@@ -18,7 +18,7 @@ const fs = require('fs');
 const df = require('./service/dialogflowService');
 //const df = require('./service/dialogFlowText');          uncomment for dialogFlow text test with response
 
-
+console.log(env);
 const LOG_TAG = "Server :: index.js :: "; 
 
 io.on('connection', (client) => {

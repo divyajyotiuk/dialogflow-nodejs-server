@@ -32,18 +32,16 @@ function App() {
 const List = (props) => {
   const { data } = props;
   return(
+  <div>
     <div>
-      <div>
-        <ul className="text">
-          <li>Hey Lucy, turn OFF video</li>
-          <li>Hey Lucy, turn ON video</li>
-          <li>Hey Lucy, turn OFF Music</li>
-          <li>Hey Lucy, turn ON Music</li>
-          <li>Hey Lucy, change to Hip Hop</li>
-          <li>Hey Lucy, change to Tempo</li>
-          <li>Hey Lucy, start class</li>
-          <li>Hey Lucy, exit class</li>
-        </ul>
+      <ul className="text">
+        <li>Hey Lucy, click the red button</li>
+        <li>Hey Lucy, click the green button</li>
+      </ul>
+    </div>
+    <div className="button-div">
+      <button className="red-button">Click me!</button>
+      <button className="green-button">Click me!</button>
     </div>
     <div className="response-text">
       <ol>

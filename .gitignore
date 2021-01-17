@@ -22,7 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-Lucy-9645cc78036d.json
+lucy-himh-5ce039ce0635.json
 env_vars.sh
-/server/.env
-/server/stream.wav
+*stream.wav
+*.env
